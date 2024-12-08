@@ -1,0 +1,50 @@
+﻿@page "/userinfos/details"
+@using Microsoft.EntityFrameworkCore
+@using Triolingo.Domain
+@inject IDbContextFactory<Triolingo.Data.TriolingoContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>UserInfo</h2>
+    <hr />
+    @if (userinfo is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">FirstName</dt>
+            <dd class="col-sm-10">@userinfo.FirstName</dd>
+            <dt class="col-sm-2">LastName</dt>
+            <dd class="col-sm-10">@userinfo.LastName</dd>
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10">@userinfo.Email</dd>
+        </dl>
+        <div>
+            <a href="@($"/userinfos/edit?userinfoid={userinfo.UserInfoID}")">Edit</a> |
+            <a href="@($"/userinfos")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private UserInfo? userinfo;
+
+    [SupplyParameterFromQuery]
+    private int UserInfoID { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        userinfo = await context.UserInfo.FirstOrDefaultAsync(m => m.UserInfoID == UserInfoID);
+
+        if (userinfo is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

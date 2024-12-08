@@ -1,0 +1,38 @@
+﻿@page "/userinfos"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Triolingo.Domain
+@using Triolingo.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<Triolingo.Data.TriolingoContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="userinfos/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.UserInfo">
+    <PropertyColumn Property="userinfo => userinfo.FirstName" />
+    <PropertyColumn Property="userinfo => userinfo.LastName" />
+    <PropertyColumn Property="userinfo => userinfo.Email" />
+
+    <TemplateColumn Context="userinfo">
+        <a href="@($"userinfos/edit?userinfoid={userinfo.UserInfoID}")">Edit</a> |
+        <a href="@($"userinfos/details?userinfoid={userinfo.UserInfoID}")">Details</a> |
+        <a href="@($"userinfos/delete?userinfoid={userinfo.UserInfoID}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private TriolingoContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

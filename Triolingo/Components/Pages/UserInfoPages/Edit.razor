@@ -1,0 +1,99 @@
+﻿@page "/userinfos/edit"
+@using Microsoft.EntityFrameworkCore
+@using Triolingo.Domain
+@inject IDbContextFactory<Triolingo.Data.TriolingoContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>UserInfo</h2>
+<hr />
+@if (UserInfo is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="UserInfo" OnValidSubmit="UpdateUserInfo" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="UserInfo.UserInfoID" value="@UserInfo.UserInfoID" />
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">FirstName:</label>
+                    <InputText id="firstname" @bind-Value="UserInfo.FirstName" class="form-control" />
+                    <ValidationMessage For="() => UserInfo.FirstName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">LastName:</label>
+                    <InputText id="lastname" @bind-Value="UserInfo.LastName" class="form-control" />
+                    <ValidationMessage For="() => UserInfo.LastName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <InputText id="email" @bind-Value="UserInfo.Email" class="form-control" />
+                    <ValidationMessage For="() => UserInfo.Email" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/userinfos">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int UserInfoID { get; set; }
+
+    [SupplyParameterFromForm]
+    private UserInfo? UserInfo { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        UserInfo ??= await context.UserInfo.FirstOrDefaultAsync(m => m.UserInfoID == UserInfoID);
+
+        if (UserInfo is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateUserInfo()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(UserInfo!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!UserInfoExists(UserInfo!.UserInfoID))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/userinfos");
+    }
+
+    private bool UserInfoExists(int userinfoid)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.UserInfo.Any(e => e.UserInfoID == userinfoid);
+    }
+}

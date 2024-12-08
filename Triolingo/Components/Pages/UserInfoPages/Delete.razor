@@ -1,0 +1,63 @@
+﻿@page "/userinfos/delete"
+@using Microsoft.EntityFrameworkCore
+@using Triolingo.Domain
+@inject IDbContextFactory<Triolingo.Data.TriolingoContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<p>Are you sure you want to delete this?</p>
+<div>
+    <h2>UserInfo</h2>
+    <hr />
+    @if (userinfo is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">FirstName</dt>
+            <dd class="col-sm-10">@userinfo.FirstName</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">LastName</dt>
+            <dd class="col-sm-10">@userinfo.LastName</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10">@userinfo.Email</dd>
+        </dl>
+        <EditForm method="post" Model="userinfo" OnValidSubmit="DeleteUserInfo" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(userinfo is null)">Delete</button> |
+            <a href="/userinfos">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private UserInfo? userinfo;
+
+    [SupplyParameterFromQuery]
+    private int UserInfoID { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        userinfo = await context.UserInfo.FirstOrDefaultAsync(m => m.UserInfoID == UserInfoID);
+
+        if (userinfo is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    private async Task DeleteUserInfo()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.UserInfo.Remove(userinfo!);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/userinfos");
+    }
+}
