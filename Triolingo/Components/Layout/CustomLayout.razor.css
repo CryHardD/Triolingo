@@ -1,4 +1,4 @@
-﻿/*
+﻿
 
 * {
     margin: 0;
@@ -85,7 +85,9 @@ header {
     }
 
 .wrapper {
-    position: relative;
+    position: fixed; /* Change from relative to fixed */
+    top: 25%; /* Position at the vertical center */
+    left: 40%; /* Position at the horizontal center */
     width: 400px;
     height: 440px;
     background: transparent;
@@ -234,6 +236,7 @@ header {
     cursor: pointer;
     font-size: 1em;
     color: black;
+    background-color: #fff;
     font-weight: 500;
 }
 
