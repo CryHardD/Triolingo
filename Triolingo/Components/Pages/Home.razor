@@ -1,98 +1,24 @@
 ﻿@page "/"
 @using Triolingo.Components.Layout
 @layout CustomLayout
-<PageTitle>Triolingo</PageTitle>
+<PageTitle>Home</PageTitle>
 
 <h1 style="color: white; text-align: center;">Want to learn a language?</h1>
 <p style="color: white; text-align: center;">Welcome to Triolingo</p>
-<!--
-<header>
-    <h2 class="logo">Triolingo</h2>
-    <nav class="navigation">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Contact</a>
-        <button class="btnLogin-popup" @onlick="loginlink">Login</button>
-    </nav>
-</header>
 
-<div class="wrapper">
-    <span class="icon-close"><ion-icon name="close-outline"></ion-icon></span>
-    <div class="form-box login">
-        <h2>Login</h2>
-        <form action="#">
-            <div class="input-box">
-
-                <input type="email" required>
-                <label>Email</label>
-            </div>
-            <div class="input-box">
-
-                <input type="password" required>
-                <label>Password</label>
-            </div>
-            <div class="remember-forgot">
-                <label><input type="checkbox"> Remember me</label>
-                <a href="#" style="color: white;"> Forget Password</a>
-            </div>
-            <button type="submit" class="btn"> Login</button>
-            <div class="login-register">
-                <p>Don't have an account? <a href="#" class="register-link" style="color: white;">Register here</a></p>
-            </div>
-        </form>
-    </div>
-
-    <div class="form-box register">
-        <h2>Registration</h2>
-        <form action="#">
-            <div class="input-box">
-                <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                <input type="text" required>
-                <label>Username</label>
-            </div>
-            <div class="input-box">
-                <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
-                <input type="email" required>
-                <label>Email</label>
-            </div>
-            <div class="input-box">
-                <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                <input type="password" required>
-                <label>Password</label>
-            </div>
-            <div class="remember-forgot">
-                <label><input type="checkbox"> I agree to terms & conditions</label>
-            </div>
-            <button type="submit" class="btn"> Register</button>
-            <div class="login-register">
-                <p style="color: white;">Already have an account? <a href="#" class="login-link" style="color: white;">Login</a></p>
-            </div>
-        </form>
-    </div>
+<div class="box-container">
+    <div class="box">Language 1</div>
+    <div class="box">Language 2</div>
+    <div class="box">Language 3</div>
 </div>
-<script>
-    const wrapper = document.querySelector('.wrapper');
-    const loginLink = document.querySelector('.login-link');
-    const registerLink = document.querySelector('.register-link');
-    const btnPopup = document.querySelector('.btnLogin-popup');
-    const iconClose = document.querySelector('.icon-close');
 
-    registerLink.addEventListener('click', () => {
-        wrapper.classList.add('active');
-    });
 
-    loginLink.addEventListener('click', () => {
-        wrapper.classList.remove('active');
-    });
+@code { //everything below and the css part of this code is still a work in progress aka it doesnt work
+    private string boxClass = ""; // Default class (no movement)
 
-    btnPopup.addEventListener('click', () => {
-        wrapper.classList.add('active-popup');
-    });
-
-    iconClose.addEventListener('click', () => {
-        wrapper.classList.remove('active-popup');
-    });
-</script>
-
--->
+    private void MoveBoxesDown()
+    {
+        // Toggle the class to move boxes down
+        boxClass = "move-down";
+    }
+}

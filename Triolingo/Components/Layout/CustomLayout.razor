@@ -1,20 +1,22 @@
-﻿@page "/home"
+﻿@page "/Login"
 @using Microsoft.AspNetCore.Identity
 @using Triolingo.Data
 @inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
 @inject UserManager<TriolingoUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
 @inject SignInManager<TriolingoUser> SignInManager
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Triolingo</PageTitle>
 <header>
     <h2 class="logo">Triolingo</h2>
     <nav class="navigation">
-        <a href="#">Home</a>
+        <a href="#" @onclick="GoToHomePage">Home</a>
         <a href="#">About</a>
         <a href="#">Services</a>
         <a href="#">Contact</a>
-        <button class="btnLogin-popup" @onlick="loginlink">Login</button>
+        <button class="btnLogin-popup" >Login</button>
     </nav>
 </header>
 
@@ -72,10 +74,20 @@
         </form>
     </div>
 </div>
+
+<main>
+    <div class="top-row px-4">
+        
+    </div>
+
+    <article class="content px-4">
+        @Body
+    </article>
+</main>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
-        const wrapper = document.querySelector('.wrapper');
+    const wrapper = document.querySelector('.wrapper');
     const loginLink = document.querySelector('.login-link');
     const registerLink = document.querySelector('.register-link');
     const btnPopup = document.querySelector('.btnLogin-popup');
@@ -83,26 +95,40 @@
 
     // Show register form
     registerLink.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent default link behavior
-        wrapper.classList.add('active'); // Show register form
+    event.preventDefault(); // Prevent default link behavior
+    wrapper.classList.add('active'); // Show register form
     });
 
     // Show login form
     loginLink.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent default link behavior
-        wrapper.classList.remove('active'); // Show login form
+    event.preventDefault(); // Prevent default link behavior
+    wrapper.classList.remove('active'); // Show login form
     });
 
     // Show popup
     btnPopup.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent default link behavior
-        wrapper.classList.add('active-popup');
+    event.preventDefault(); // Prevent default link behavior
+    wrapper.classList.add('active-popup');
     });
 
     // Close popup
     iconClose.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent default link behavior
-        wrapper.classList.remove('active-popup');
+    event.preventDefault(); // Prevent default link behavior
+    wrapper.classList.remove('active-popup');
     });
 
 </script>
+
+@code {
+    private async Task LogToConsole(string message)
+    {
+        await JSRuntime.InvokeVoidAsync("console.log", message);
+    }
+ 
+    private async Task GoToHomePage()
+    {
+        await LogToConsole("Home link clicked!");
+        NavigationManager.NavigateTo("/");
+    }
+
+}
