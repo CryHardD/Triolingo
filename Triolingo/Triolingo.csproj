@@ -25,9 +25,4 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\Pages\Lessons\Japanese\" />
-    <Folder Include="Components\Pages\Lessons\Chinese\" />
-  </ItemGroup>
-
 </Project>
