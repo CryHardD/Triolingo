@@ -12,68 +12,13 @@
 <header>
     <h2 class="logo">Triolingo</h2>
     <nav class="navigation">
-        <a href="#" @onclick="GoToHomePage">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Contact</a>
-        <button class="btnLogin-popup" >Login</button>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/services">Services</a>
+        <a href="/contact">Contact</a>
+        <button class="btnLogin-popup" onclick="location.href='homelogin'">Login</button>
     </nav>
 </header>
-
-<div class="wrapper">
-    <span class="icon-close"><ion-icon name="close-outline"></ion-icon></span>
-    <div class="form-box login">
-        <h2>Login</h2>
-        <form action="#">
-            <div class="input-box">
-                <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
-                <input type="email" required>
-                <label>Email</label>
-            </div>
-            <div class="input-box">
-                <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                <input type="password" required>
-                <label>Password</label>
-            </div>
-            <div class="remember-forgot">
-                <label><input type="checkbox"> Remember me</label>
-                <a href="#" style="color: white;"> Forget Password</a>
-            </div>
-            <button type="submit" class="btn"@onlick="userlogin" >Login</button>
-            <div class="login-register">
-                <p>Don't have an account? <a href="#" class="register-link" style="color: white;">Register here</a></p>
-            </div>
-        </form>
-    </div>
-
-    <div class="form-box register">
-        <h2>Registration</h2>
-        <form action="#">
-            <div class="input-box">
-                <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                <input type="text" required>
-                <label>Username</label>
-            </div>
-            <div class="input-box">
-                <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
-                <input type="email" required>
-                <label>Email</label>
-            </div>
-            <div class="input-box">
-                <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                <input type="password" required>
-                <label>Password</label>
-            </div>
-            <div class="remember-forgot">
-                <label><input type="checkbox"> I agree to terms & conditions</label>
-            </div>
-            <button type="submit" class="btn"> Register</button>
-            <div class="login-register">
-                <p style="color: white;">Already have an account? <a href="#" class="login-link" style="color: white;">Login</a></p>
-            </div>
-        </form>
-    </div>
-</div>
 
 <main>
     <div class="top-row px-4">
@@ -84,40 +29,6 @@
         @Body
     </article>
 </main>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<script>
-    const wrapper = document.querySelector('.wrapper');
-    const loginLink = document.querySelector('.login-link');
-    const registerLink = document.querySelector('.register-link');
-    const btnPopup = document.querySelector('.btnLogin-popup');
-    const iconClose = document.querySelector('.icon-close');
-
-    // Show register form
-    registerLink.addEventListener('click', (event) => {
-    event.preventDefault(); // Prevent default link behavior
-    wrapper.classList.add('active'); // Show register form
-    });
-
-    // Show login form
-    loginLink.addEventListener('click', (event) => {
-    event.preventDefault(); // Prevent default link behavior
-    wrapper.classList.remove('active'); // Show login form
-    });
-
-    // Show popup
-    btnPopup.addEventListener('click', (event) => {
-    event.preventDefault(); // Prevent default link behavior
-    wrapper.classList.add('active-popup');
-    });
-
-    // Close popup
-    iconClose.addEventListener('click', (event) => {
-    event.preventDefault(); // Prevent default link behavior
-    wrapper.classList.remove('active-popup');
-    });
-
-</script>
 
 @code {
     private async Task LogToConsole(string message)
@@ -125,10 +36,24 @@
         await JSRuntime.InvokeVoidAsync("console.log", message);
     }
  
-    private async Task GoToHomePage()
+    private async Task GoToHome()
     {
-        await LogToConsole("Home link clicked!");
+        await LogToConsole("About link clicked!");
         NavigationManager.NavigateTo("/");
     }
-
+    private async Task GoToAbout()
+    {
+        await LogToConsole("About link clicked!");
+        NavigationManager.NavigateTo("/about");
+    }
+    private async Task GoToServices()
+    {
+        await LogToConsole("Services link clicked!");
+        NavigationManager.NavigateTo("/services");
+    }
+    private async Task GoToContact()
+    {
+        await LogToConsole("Contacts link clicked!");
+        NavigationManager.NavigateTo("/contact");
+    }
 }

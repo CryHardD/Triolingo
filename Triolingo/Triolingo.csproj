@@ -19,4 +19,15 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Components\Pages\HomeLogin.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\Pages\Lessons\Japanese\" />
+    <Folder Include="Components\Pages\Lessons\Chinese\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,52 @@
+﻿.header {
+    color: white;
+    text-align: center;
+    margin-top: 100px;
+}
+
+/* Style for the paragraph */
+.subheading {
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+h1 {
+    margin: 0;
+    margin-top: 100px;
+}
+
+.box-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 100px; /* space between the heading and the boxes */
+    width: 70%; /* Adjust width to your preference */
+    margin-left: auto;
+    margin-right: auto;
+    transition: transform 0.5s ease; /* This enables smooth transition */
+}
+
+.box {
+    background-color: #fff; /* Light background */
+    color: black;
+    width: 40%; /* Each box takes 30% of the container width */
+    height: 300px; /* Fixed height for the boxes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    text-align: center;
+    border: 1px solid black;
+}
+
+    .box h2 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .box p {
+        font-size: 1rem;
+        color: #333;
+        margin-top: 10px; /* Optional: space between description and the box border */
+    }
